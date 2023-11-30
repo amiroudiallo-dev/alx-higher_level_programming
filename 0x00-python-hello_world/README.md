@@ -2,3 +2,4 @@
 ### Tasks, carried out
 - [x] 0-run
 - [x] 1-run_inline
+- [x] 2-print.py
