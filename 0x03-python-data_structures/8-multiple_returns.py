@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-# DIALLO Amirou Yannick Wendpuire<mailto:amiroudiallo.yw@gmail.com>
-
+# 8-multiple_returns.py
+# DIALLO Amirou Yannick Wendpuire <mailto:amroudiallo.yw@gmail.com>
 
 
 def multiple_returns(sentence):
