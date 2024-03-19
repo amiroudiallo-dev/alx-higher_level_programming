@@ -1,23 +1,25 @@
 #!/usr/bin/python3
-# gets all states via python yee boi
+"""
+return all table values (table 'states')
+parameters given to script: username, password, database
+"""
 
-
-def main(args):
-    # gets all state stuff
-    if len(args) != 4:
-        raise Exception("need 3 arguments!")
-    db = MySQLdb.connect(host='localhost',
-                         user=args[1],
-                         passwd=args[2],
-                         db=args[3])
-    cur = db.cursor()
-    cur.execute("SELECT * FROM states ORDER BY id ASC")
-    states = cur.fetchall()
-    for state in states:
-        print(state)
-
+import MySQLdb
+from sys import argv
 
 if __name__ == "__main__":
-    import sys
-    import MySQLdb
-    main(sys.argv)
+
+    # connect to database
+    db = MySQLdb.connect(host="localhost",
+                         port=3306,
+                         user=argv[1],
+                         passwd=argv[2],
+                         db=argv[3])
+
+    # create cursor to exec queries using SQL
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM states ORDER BY id ASC")
+    for row in cursor.fetchall():
+        print(row)
+    cursor.close()
+    db.close()
