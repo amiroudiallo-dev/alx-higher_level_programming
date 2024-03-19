@@ -1,25 +1,30 @@
 #!/usr/bin/python3
-# gets all states via python yee boi with your own state SAFE
+"""
+return matching states; safe from MySQL injections
+# http://bobby-tables.com/python
+parameters given to script: username, password, database, state to match
+"""
 
-
-def main(args):
-    # gets all state stuff SAFELY
-    if len(args) != 5:
-        raise Exception("need 4 arguments!")
-    db = MySQLdb.connect(host='localhost',
-                         user=args[1],
-                         passwd=args[2],
-                         db=args[3])
-    cur = db.cursor()
-    cur.execute(
-        "SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC",
-        (args[4],))
-    states = cur.fetchall()
-    for state in states:
-        print(state)
-
+import MySQLdb
+from sys import argv
 
 if __name__ == "__main__":
-    import sys
-    import MySQLdb
-    main(sys.argv)
+
+    # connect to database
+    db = MySQLdb.connect(host="localhost",
+                         port=3306,
+                         user=argv[1],
+                         passwd=argv[2],
+                         db=argv[3])
+
+    # create cursor to exec queries using SQL; match arg given
+    cursor = db.cursor()
+    sql_cmd = """SELECT *
+                 FROM states
+                 WHERE name=%s ORDER BY id ASC"""
+    cursor.execute(sql_cmd, (argv[4],))
+
+    for row in cursor.fetchall():
+        print(row)
+    cursor.close()
+    db.close()
